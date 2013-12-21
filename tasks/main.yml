@@ -1,0 +1,41 @@
+---
+# Loading vars
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Install Shorewall server
+- name: Install the required  packages in Redhat derivatives
+  yum: name={{ shorewall_package }} state=installed
+  when: ansible_os_family == 'RedHat'
+
+- name: Install the required packages in Debian derivatives
+  apt: name={{ shorewall_package }} state=installed update_cache=yes
+  when: ansible_os_family == 'Debian'
+
+# Generate configuration
+- name: Generate zones
+  template: src=zones.j2 dest={{ shorewall_zones_file }}
+
+- name: Generate interfaces
+  template: src=interfaces.j2 dest={{ shorewall_interfaces_file }}
+
+- name: Generate policy
+  template: src=policy.j2 dest={{ shorewall_policy_file }}
+
+- name: Generate rules
+  template: src=rules.j2 dest={{ shorewall_rules_file }}
+  
+- name: Generate shorewall.conf 
+  template: src=shorewall.conf.j2 dest={{ shorewall_config_file }}
+
+# Generate service configuration
+- name: Generate Shorewall service conf
+  template: src=shorewall.j2 dest={{ shorewall_service_config }} owner=root group=root
+
+# Reload service
+- name: Restart Shorewall service
+  service: name={{ shorewall_service }} state=restarted
+
+# Enable Shorewall server
+- name: Start the  Shorewall service
+  service: name={{ shorewall_service }} state=started enabled=yes

@@ -1,0 +1,4 @@
+{% for i in shorewall_interfaces %}
+{{ i.zone }}	{{ i.interface }}	{% if i.broadcast is defined %}{{ i.broadcast }}{% else %}-{% endif %}	{% if i.options is defined %}{{ i.options }}{% else %}-{% endif %}
+
+{% endfor %}

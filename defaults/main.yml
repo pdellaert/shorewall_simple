@@ -1,0 +1,29 @@
+---
+shorewall_enabled: "Yes"
+
+shorewall_zones:
+- zone: "fw"
+  type: "firewall"
+- zone: "net"
+  type: "ipv4"
+
+shorewall_interfaces: 
+- interface: "eth0"
+  zone: "net"
+  broadcast: "detect"
+  options: "dhcp,tcpflags,nosmurfs,logmartians"
+
+shorewall_policies:
+- source: "$FW"
+  destination: "net"
+  policy: "ACCEPT"
+- source: "net"
+  destination: "$FW"
+  policy: "ACCEPT"
+- source: "all"
+  destination: "all"
+  policy: "DROP"
+  log_level: "info"
+
+shorewall_rules: []
+

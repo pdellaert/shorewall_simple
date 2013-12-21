@@ -1,0 +1,8 @@
+{% for s in shorewall_rules %}
+SECTION {{ s.section }}
+{% for r in s.rules %}
+{{ r.action }}	{% if r.source is defined %}{{ r.source }}{% else %}-{% endif %}	{% if r.destination is defined %}{{ r.destination }}{% else %}-{% endif %}	{% if r.protocol is defined %}{{ r.protocol }}{% else %}-{% endif %}	{% if r.destination_port is defined %}{{ r.destination_port }}{% else %}-{% endif %}	{% if r.source_port is defined %}{{ r.source_port }}{% else %}-{% endif %}	{% if r.original_destination is defined %}{{ r.original_destination }}{% else %}-{% endif %}	{% if r.rate_limit is defined %}{{ r.rate_limit }}{% else %}-{% endif %}	{% if r.user_group is defined %}{{ r.user_group }}{% else %}-{% endif %}	{% if r.mark is defined %}{{ r.mark }}{% else %}-{% endif %}	{% if r.connection_limit is defined %}{{ r.connection_limit }}{% else %}-{% endif %}	{% if r.time is defined %}{{ r.time }}{% else %}-{% endif %}	{% if r.headers is defined %}{{ r.headers }}{% else %}-{% endif %}	{% if r.switch is defined %}{{ r.switch }}{% else %}-{% endif %}
+
+{% endfor %}
+
+{% endfor %}

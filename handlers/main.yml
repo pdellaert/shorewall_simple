@@ -1,0 +1,3 @@
+---
+- name: restart shorewall
+  service: name={{ shorewall_service }} state=restarted 
