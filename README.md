@@ -47,20 +47,20 @@ Shorewall configuration.
     shorewall_policies:
     - source: "$FW"
       destination: "net"
-      policy: "accept"
+      policy: "ACCEPT"
     - source: "net"
       destination: "$FW"
-      policy: "accept"
+      policy: "ACCEPT"
     - source: "all"
       destination: "all"
-      policy: "drop"
+      policy: "DROP"
       log_level: "info"
       burst_limit: "10/second:100"
     
     shorewall_rules:
     - section: "NEW"
       rules:
-      - action: "accept"
+      - action: "ACCEPT"
         source: "net"
         destination: "$FW"
         protocol: "tcp"
@@ -97,7 +97,7 @@ Examples
           shorewall_policies:
           - source: "all"
             destination: "all"
-            policy: "accept"
+            policy: "ACCEPT"
 
 2) Example allowing all outgoing traffic but block incomming traffic and log
 it, but allow incomming SSH traffic and accept Ping
@@ -119,21 +119,21 @@ it, but allow incomming SSH traffic and accept Ping
           shorewall_policies:
           - source: "$FW"
             destination: "net"
-            policy: "accept"
+            policy: "ACCEPT"
           - source: "net"
             destination: "$FW"
-            policy: "drop"
+            policy: "DROP"
             log_level: "info"
           - source: "all"
             destination: "all"
-            policy: "drop"
+            policy: "DROP"
           shorewall_rules:
-          - section: "new"
+          - section: "NEW"
             rules:
-            - action: "Ping/accept"
+            - action: "Ping/ACCEPT"
               source: "net"
               destination: "$FW"
-            - action: "accept"
+            - action: "ACCEPT"
               source: "net"
               destination: "$FW"
               protocol: "tcp"
@@ -157,5 +157,6 @@ Author Information
 ------------------
 
 Philippe Dellaert
+
 
 
