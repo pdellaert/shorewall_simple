@@ -119,7 +119,7 @@ AUTO_COMMENT=Yes
 
 AUTOMAKE=No
 
-BLACKLISTNEWONLY=Yes
+BLACKLISTNEWONLY={% if shorewall_blacklistnewonly is defined %}{{ shorewall_blacklistnewonly }}{% else %}Yes{% endif %}
 
 CLAMPMSS=No
 

@@ -28,6 +28,7 @@ Shorewall configuration.
     shorewall_restartoptions: ""
     shorewall_initlog: "/var/log/shorewall_init.log"
     shorewall_safestop: 0
+    shorewall_blacklistnewonly: "Yes"
     
     shorewall_zones:
     - zone: "fw"
