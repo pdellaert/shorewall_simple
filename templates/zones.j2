@@ -1,4 +1,7 @@
 {% for z in shorewall_zones %}
+{% if z.zone is defined and z.zone != '' %}
+
 {{ z.zone }}	{{ z.type }}	{% if z.options is defined %}{{ z.options }}{% else %}-{% endif %}	{% if z.options_in is defined %}{{ z.options_in }}{% else %}-{% endif %}	{% if z.options_out is defined %}{{ z.options_out }}{% else %}-{% endif %}
 
+{% endif %}
 {% endfor %}

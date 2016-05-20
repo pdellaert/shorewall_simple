@@ -40,7 +40,7 @@ LOG_VERBOSITY=2
 
 LOGALLNEW=
 
-LOGFILE=/var/log/messages
+LOGFILE={% if ansible_distribution == 'Ubuntu' %}/var/log/syslog{% else %}/var/log/messages{% endif %}
 
 LOGFORMAT="Shorewall:%s:%s:"
 
@@ -119,7 +119,9 @@ AUTO_COMMENT=Yes
 
 AUTOMAKE=No
 
-BLACKLISTNEWONLY=Yes
+{% if shorewall_blacklistnewonly is defined %}BLACKLISTNEWONLY={{ shorewall_blacklistnewonly }}{% endif %}
+
+{% if shorewall_blacklist is defined %}BLACKLIST={{shorewall_blacklist}}{% endif %}
 
 CLAMPMSS=No
 

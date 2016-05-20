@@ -7,34 +7,47 @@
 - name: Install the required  packages in Redhat derivatives
   yum: name={{ shorewall_package }} state=installed
   when: ansible_os_family == 'RedHat'
+  notify: Restart Shorewall Service 
 
 - name: Install the required packages in Debian derivatives
   apt: name={{ shorewall_package }} state=installed update_cache=yes
   when: ansible_os_family == 'Debian'
+  notify: Restart Shorewall Service 
+
+- name: Install the required packages in Arch derivatives
+  pacman: name={{ shorewall_package }} state=installed update_cache=yes
+  when: ansible_os_family == 'Archlinux'
+  notify: Restart Shorewall Service 
 
 # Generate configuration
 - name: Generate zones
   template: src=zones.j2 dest={{ shorewall_zones_file }}
+  notify: Restart Shorewall Service 
 
 - name: Generate interfaces
   template: src=interfaces.j2 dest={{ shorewall_interfaces_file }}
+  notify: Restart Shorewall Service 
 
 - name: Generate policy
   template: src=policy.j2 dest={{ shorewall_policy_file }}
+  notify: Restart Shorewall Service 
 
 - name: Generate rules
   template: src=rules.j2 dest={{ shorewall_rules_file }}
+  notify: Restart Shorewall Service 
   
 - name: Generate shorewall.conf 
   template: src=shorewall.conf.j2 dest={{ shorewall_config_file }}
+  notify: Restart Shorewall Service 
 
 # Generate service configuration
 - name: Generate Shorewall service conf
   template: src=shorewall.j2 dest={{ shorewall_service_config }} owner=root group=root
+  notify: Restart Shorewall Service 
 
-# Reload service
-- name: Restart Shorewall service
-  service: name={{ shorewall_service }} state=restarted
+## Reload service
+#- name: Restart Shorewall service
+#  service: name={{ shorewall_service }} state=restarted
 
 # Enable Shorewall server
 - name: Start the  Shorewall service
